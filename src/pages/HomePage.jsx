@@ -53,17 +53,22 @@ const HomePage = () => {
       <Header />
       <PropertyDescription />
       <Banks />
+      <FloorPlans />
       <PropertyPrices />
-      <AmenitiesSection />
       <LocationAdvantages />
+      <AmenitiesSection />
+      <Location />
+
       <UnitLayouts />
       <PropertiInfo />
-      <FloorPlans />
-      <Location />
-      <ReraInformation />
-      <PropertySpecifications />
+
+
+
+
       <Gallery />
+      <ReraInformation />
       <VideoTour />
+      <PropertySpecifications />
       <Blogs />
       <FAQ />
       <ContactUs />

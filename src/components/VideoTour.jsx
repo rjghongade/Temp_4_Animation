@@ -84,7 +84,7 @@ const VideoTour = () => {
   if (loading || error || videos.length === 0 || !videos[0]?.youtube_video_id) return null;
 
   return (
-    <div className="relative w-full flex items-center justify-center bg-white text-white px-5">
+    <div className="relative w-full flex items-center justify-center bg-white text-white px-5 mb-4">
       <div className="relative w-full max-w-4xl rounded-2xl overflow-hidden shadow-xl transition-transform transform hover:scale-105">
         {/* Dark Overlay */}
         <div className="absolute inset-0 bg-black/30 z-10"></div>
