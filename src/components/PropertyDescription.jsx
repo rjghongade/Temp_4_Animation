@@ -50,7 +50,7 @@ const PropertyDescription = () => {
     <div id="featured" className="relative bg-gradient-to-b from-[#f8f9fa] to-white py-12 px-4 sm:px-8 md:px-16">
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-32 h-32 bg-[#7daa71]/10 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
-      <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#09305d]/5 rounded-full translate-x-1/3 translate-y-1/3"></div>
+      
       
       <div className="relative z-10 max-w-5xl mx-auto">
         {/* Header with accent line */}

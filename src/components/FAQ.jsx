@@ -64,13 +64,13 @@ const FAQ = () => {
   }
 
   return (
-    <motion.div 
+    <motion.div
       className="bg-[#f8f9fa] p-6 md:p-12 lg:p-16 rounded-lg shadow-lg"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      <motion.div 
+      <motion.div
         className="mb-10 text-center"
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -79,17 +79,26 @@ const FAQ = () => {
         <h2 className="text-3xl font-bold text-[#09305d]">{heading}</h2>
       </motion.div>
 
-      <div className="max-w-4xl mx-auto space-y-4">
-        {faqs.map((faq) => (
-          <div
+      <div className="max-w-4xl mx-auto space-y-6">
+        {faqs.map((faq, index) => (
+          <motion.div
             key={faq.id}
-            className="bg-[#e0e0e0] border border-[#09305d] rounded-lg shadow-md"
+            className={`flex items-center gap-4 p-4 rounded-lg shadow-md transition-all ${
+              index % 2 === 0 ? "bg-[#e0e0e0]" : "bg-[#cf6615]/20"
+            }`}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
           >
             <button
               onClick={() => handleQuestionClick(faq.id)}
-              className="w-full flex items-center justify-between p-4 text-left transition-all hover:bg-[#cf6615] hover:text-white"
+              className={`flex-1 flex items-center justify-between p-4 text-left transition-all w-full rounded-lg ${
+                index % 2 === 0
+                  ? "hover:bg-[#cf6615] hover:text-white"
+                  : "hover:bg-[#09305d] hover:text-white"
+              }`}
             >
-              <span className="text-[#09305d] font-medium text-lg">
+              <span className="text-lg font-medium text-[#09305d]">
                 {faq.faq_title}
               </span>
               {activeQuestion === faq.id ? (
@@ -100,11 +109,16 @@ const FAQ = () => {
             </button>
 
             {activeQuestion === faq.id && (
-              <div className="p-4 border-t border-[#7daa71] text-[#36322e]">
+              <motion.div
+                className="p-4 border-t border-[#7daa71] text-[#36322e] w-full"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                transition={{ duration: 0.5 }}
+              >
                 {stripHtml(faq.faq_content)}
-              </div>
+              </motion.div>
             )}
-          </div>
+          </motion.div>
         ))}
       </div>
     </motion.div>
