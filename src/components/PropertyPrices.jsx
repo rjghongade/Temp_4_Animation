@@ -1,15 +1,16 @@
 import { useEffect, useState, useRef } from 'react';
-import { Loader } from 'lucide-react';
+import { Loader, ChevronRight, Home, Maximize, Layout, Tag } from 'lucide-react';
 import config from '../../config';
 
 const PropertyPrices = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeIndex, setActiveIndex] = useState(null);
-  const [isInView, setIsInView] = useState(false);
+  const [activeCard, setActiveCard] = useState(null);
+  const [animateCards, setAnimateCards] = useState(false);
 
   const sectionRef = useRef(null);
+  const cardsRef = useRef([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,6 +24,12 @@ const PropertyPrices = () => {
         }
         const result = await response.json();
         setData(result);
+        
+        // Setup animation after data loads
+        setTimeout(() => {
+          setAnimateCards(true);
+        }, 300);
+        
       } catch (err) {
         console.error(err.message);
         setError(err.message);
@@ -33,17 +40,15 @@ const PropertyPrices = () => {
     fetchData();
   }, []);
 
-  // Intersection Observer to detect when the section is in view
+  // Intersection Observer for section
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-        } else {
-          setIsInView(false);
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setAnimateCards(true);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.2 }
     );
 
     if (sectionRef.current) {
@@ -59,81 +64,172 @@ const PropertyPrices = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center py-16 bg-gradient-to-br from-[#09305d] to-[#36322e]">
-        <Loader size={30} className="text-[#cf6615] animate-spin" />
+      <div className="flex justify-center items-center py-20">
+        <div className="relative">
+          <div className="w-16 h-16 border-4 border-gray-200 border-t-teal-500 rounded-full animate-spin"></div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-8 h-8 bg-white rounded-full"></div>
+          </div>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="text-center py-12 text-red-400 bg-gradient-to-br from-[#09305d] to-[#36322e]">
-        Error loading property prices: {error}
+      <div className="bg-red-50 text-red-600 p-8 rounded-lg mx-4 my-8 text-center">
+        <p className="font-medium">Error loading property prices</p>
+        <p className="text-sm mt-2">{error}</p>
+        <button 
+          onClick={() => window.location.reload()} 
+          className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+        >
+          Try Again
+        </button>
       </div>
     );
   }
 
-  if (!data) {
+  if (!data || !data.property_prices || data.property_prices.length === 0) {
     return (
-      <div className="text-center py-12 text-gray-400 bg-gradient-to-br from-[#09305d] to-[#36322e]">
-        No property data available
+      <div className="bg-gray-50 p-8 rounded-lg mx-4 my-8 text-center text-gray-500">
+        No property pricing information is currently available
       </div>
     );
   }
 
   return (
     <section
-      id="BanksSection"
       ref={sectionRef}
-      className={`relative w-full py-16 text-white overflow-hidden bg-[#f8f9fa] ${
-        isInView ? 'animate__animated animate__fadeInUp' : ''
-      }`}
+      className="relative py-20 bg-gradient-to-b from-white via-teal-50 to-white overflow-hidden"
     >
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#7daa71]/20 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#cf6615]/20 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/4"></div>
-        <div className="absolute top-1/3 left-1/4 w-64 h-64 bg-[#09305d]/30 rounded-full blur-2xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-56 h-56 bg-[#7daa71]/15 rounded-full blur-2xl"></div>
+      {/* Decorative Elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute -top-20 -right-20 w-64 h-64 bg-teal-600/5 rounded-full"></div>
+        <div className="absolute top-40 left-10 w-6 h-6 bg-amber-400/30 rounded-full"></div>
+        <div className="absolute bottom-40 right-20 w-8 h-8 bg-teal-400/20 rounded-full"></div>
+        <div className="absolute top-1/4 right-1/3 w-4 h-4 bg-amber-400/30 rounded-full"></div>
+        <svg className="absolute bottom-0 left-0 w-full h-32 text-white" preserveAspectRatio="none" viewBox="0 0 1200 120">
+          <path 
+            d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" 
+            fill="currentColor" fillOpacity=".1"></path>
+          <path 
+            d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
+            fill="currentColor" fillOpacity=".05"></path>
+        </svg>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 z-10">
-        <div className="mb-16 text-center">
-          <span className="text-sm font-medium text-[#cf6615] uppercase tracking-wider animate-fade-in">
-            Premium Selection
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <span className="inline-block px-3 py-1 text-xs font-medium text-teal-800 bg-teal-100 rounded-full mb-4">
+            PROPERTY COLLECTION
           </span>
-          <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#09305d] to-[#09305d] mb-4 mt-2">
-            {data?.page?.[0]?.heading || 'Premium Property Collection'}
+          <h2 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl mb-6">
+            {data?.page?.[0]?.heading || 'Premium Properties'}
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-[#09305d] to-[#09305d] mx-auto rounded-full mb-4"></div>
-          <p className="text-[#09305d] max-w-2xl mx-auto">
-            Discover our exclusive selection of properties with premium amenities and strategic locations.
+          <div className="w-20 h-1.5 bg-amber-400 mx-auto rounded-full mb-6"></div>
+          <p className="max-w-2xl mx-auto text-xl text-gray-500">
+            Explore our exceptional selection of properties with outstanding features and prime locations
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
-          {data?.property_prices?.map((property, index) => (
-            <div key={property.id} className="property-card hover-float">
-              <div className="relative overflow-hidden bg-gradient-to-br from-[#36322e] to-[#09305d]/80 backdrop-blur-sm p-6 rounded-xl shadow-2xl border border-[#7daa71]/20 hover:border-[#cf6615]/30 transition-all duration-500 h-full flex flex-col">
-                <div className="relative z-10">
-                  <h3 className="text-2xl font-semibold text-[#e0e0e0] group-hover:text-[#f8f9fa] transition-colors duration-300">
-                    {property.property_type}
-                  </h3>
-                  <p className="text-[#cf6615] font-medium mt-2">Tower: {property.property_tower}</p>
-                  <p className="text-[#e0e0e0]">Carpet Area: {property.property_carpet_sqft} {property.carpet_unit_sqft}</p>
-                  <p className="text-[#e0e0e0]">Configuration: {property.property_configuration || "Premium Layout"}</p>
-
-                  <div className="mt-6 text-center">
+        {/* Property Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {data.property_prices.map((property, index) => (
+            <div 
+              key={property.id} 
+              className={`transform transition-all duration-700 ${
+                animateCards ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+              }`}
+              style={{ transitionDelay: `${index * 150}ms` }}
+              ref={el => cardsRef.current[index] = el}
+              onMouseEnter={() => setActiveCard(index)}
+              onMouseLeave={() => setActiveCard(null)}
+            >
+              <div className="group h-full bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+                {/* Card Header with Accent */}
+                <div className="h-3 bg-gradient-to-r from-teal-500 to-amber-400"></div>
+                
+                {/* Card Content */}
+                <div className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-teal-600 transition-colors">
+                      {property.property_type}
+                    </h3>
+                    <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-teal-100 text-teal-600">
+                      <Home size={18} />
+                    </span>
+                  </div>
+                  
+                  {/* Property Details */}
+                  <div className="space-y-3 mb-6">
+                    <div className="flex items-center text-gray-600">
+                      <Layout size={16} className="mr-2 text-amber-500" />
+                      <span>Tower: </span>
+                      <span className="ml-1 font-medium text-gray-900">{property.property_tower}</span>
+                    </div>
+                    
+                    <div className="flex items-center text-gray-600">
+                      <Maximize size={16} className="mr-2 text-amber-500" />
+                      <span>Carpet Area: </span>
+                      <span className="ml-1 font-medium text-gray-900">
+                        {property.property_carpet_sqft} {property.carpet_unit_sqft}
+                      </span>
+                    </div>
+                    
+                    <div className="flex items-center text-gray-600">
+                      <Layout size={16} className="mr-2 text-amber-500" />
+                      <span>Configuration: </span>
+                      <span className="ml-1 font-medium text-gray-900">
+                        {property.property_configuration || "Premium Layout"}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* Price Tag - only shown if price is available */}
+                  {property.property_price && (
+                    <div className="mb-6">
+                      <div className="inline-block px-4 py-2 bg-amber-100 text-amber-800 font-bold rounded-lg">
+                        <span className="flex items-center">
+                          <Tag size={16} className="mr-2" />
+                          {property.property_price}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* CTA Button with animation */}
+                  <div className="mt-auto">
                     <a
                       href="#contact"
-                      className="inline-block px-6 py-3 text-base font-medium text-white bg-[#cf6615] rounded-lg hover:bg-[#7daa71] transition duration-300 animate__animated animate__fadeInUp"
+                      className="group relative inline-flex items-center justify-center w-full px-6 py-3 text-base font-medium text-white bg-teal-600 rounded-lg overflow-hidden transition-all duration-300 hover:bg-teal-700"
                     >
-                      Request More Detail
+                      <span className="relative z-10 flex items-center">
+                        Request Details
+                        <ChevronRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                      </span>
+                      <span className={`absolute inset-0 w-0 bg-amber-500 transition-all duration-300 ${activeCard === index ? 'w-full' : ''}`}></span>
                     </a>
                   </div>
                 </div>
               </div>
             </div>
           ))}
+        </div>
+        
+        {/* Additional Info */}
+        <div className="mt-16 text-center">
+          <p className="text-gray-500 mb-6">
+            Contact our sales team for more information on these premium properties
+          </p>
+          <a
+            href="#contact"
+            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-teal-700 bg-teal-100 hover:bg-teal-200 transition-colors"
+          >
+            Get in Touch
+            <ChevronRight size={18} className="ml-2" />
+          </a>
         </div>
       </div>
     </section>

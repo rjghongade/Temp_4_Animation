@@ -107,7 +107,7 @@ const BlogContent = () => {
 <div className="min-h-screen bg-white text-[#d1b578] py-8 px-4 sm:px-6 lg:px-8">
   <div className="max-w-4xl mx-auto">
     <button
-      className="mb-4 flex items-center space-x-2 px-4 py-2 rounded-full bg-[#312223] text-[#d1b578] hover:text-[#5f7858] transition-colors"
+      className="mb-4 flex items-center space-x-2 px-4 py-2 rounded-full bg-[#09305d] text-[#d1b578] hover:text-[#5f7858] transition-colors"
       onClick={() => navigate(-1)}
     >
       <ArrowLeft size={18} />
@@ -134,14 +134,14 @@ const BlogContent = () => {
     </div>
 
     {/* Blog Short Content */}
-    <div className="bg-[#312223] rounded-lg p-6 mb-6">
+    <div className="bg-[#f8f9fa] rounded-lg p-6 mb-6">
       <p className="text-[#d1b578] text-lg leading-relaxed">
         {blog.post_content_short}
       </p>
     </div>
 
     {/* Blog Full Content */}
-    <div className="bg-[#312223] rounded-lg p-6 mb-6 overflow-hidden relative">
+    <div className="bg-[#f8f9fa] rounded-lg p-6 mb-6 overflow-hidden relative">
       <div
         className="prose prose-invert max-w-none"
         style={{
@@ -155,14 +155,14 @@ const BlogContent = () => {
 
       {/* Gradient overlay when collapsed */}
       {!expanded && (
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#312223] to-transparent pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#09305d] to-transparent pointer-events-none"></div>
       )}
 
       {/* Read More/Less Button */}
       <div className="flex justify-center mt-4">
         <button
           onClick={() => setExpanded(!expanded)}
-          className="flex items-center space-x-2 px-6 py-2 rounded-full bg-[#5f7858] text-[#170505] border border-[#d1b578] hover:bg-[#312223] hover:text-[#d1b578] transition-colors"
+          className="flex items-center space-x-2 px-6 py-2 rounded-full bg-[white] text-[#09305d] border border-[#d1b578] hover:bg-[#09305d] hover:text-[#d1b578] transition-colors"
         >
           <span>{expanded ? "Read Less" : "Read More"}</span>
           {expanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}

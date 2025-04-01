@@ -56,7 +56,7 @@ const UnitLayouts = () => {
               </span>
               <a
                 href="#contact"
-                className="mt-4 bg-blue-900 hover:bg-blue-800 text-white px-5 py-3 rounded-lg transition-all duration-200 text-sm font-medium"
+                className="mt-4 bg-blue-900 hover:bg-blue-800 text-white px-5 py-3 rounded-lg transition-all duration-200 text-sm font-medium animate-pulse"
               >
                 Inquire About This Unit
               </a>
