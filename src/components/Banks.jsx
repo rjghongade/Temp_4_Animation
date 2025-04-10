@@ -227,9 +227,9 @@ const Banks = () => {
           <div className="inline-block p-8 bg-white rounded-2xl shadow-lg">
             <h3 className="text-2xl font-bold text-blue-900 mb-3">Can't find what you're looking for?</h3>
             <p className="text-gray-600 mb-6">Contact our team for personalized assistance with your banking needs.</p>
-            <button className="px-6 py-3 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition">
+            <a href="#contact" className="px-6 py-3 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition">
               Contact Support
-            </button>
+            </a>
           </div>
         </div>
       </div>

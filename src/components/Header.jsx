@@ -49,10 +49,25 @@ const Header = () => {
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+      // Get the header height to use as offset
+      const headerHeight = document.querySelector('header').offsetHeight;
+      
+      // Get the top position of the section relative to the viewport
+      const sectionTop = section.getBoundingClientRect().top;
+      
+      // Calculate the total scroll distance needed
+      const offsetPosition = sectionTop + window.pageYOffset - headerHeight;
+      
+      // Scroll to the section with the offset
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+      
+      // Close mobile menu after navigation
+      setMobileMenuOpen(false);
+      setActiveDropdown(null);
     }
-    setMobileMenuOpen(false);
-    setActiveDropdown(null);
   };
 
   if (!data) return <div className="h-screen flex justify-center items-center bg-[#09305d]"><div className="w-12 h-12 border-4 border-[#cf6615] border-t-transparent rounded-full animate-spin"></div></div>;
@@ -331,10 +346,6 @@ const Header = () => {
                 <div className="text-[#7daa71] font-semibold">Premium Location</div>
                 <div className="text-[#e0e0e0] text-sm">{data.location}</div>
               </div>
-              {/* <div className="bg-[#36322e]/70 backdrop-blur-sm p-4 rounded-lg">
-                <div className="text-[#7daa71] font-semibold">Luxury Living</div>
-                <div className="text-[#e0e0e0] text-sm">Exclusive Amenities</div>
-              </div> */}
             </div>
           </div>
         </div>

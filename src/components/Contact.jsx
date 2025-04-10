@@ -159,7 +159,7 @@ export const ContactDialog = ({ isOpen, onClose }) => {
         onClose();
         
         // Redirect to thank you page using React Router
-        navigate('/thanku');
+        navigate('/thank-you/');
       }, 1000);
     } catch (error) {
       setSubmitStatus("error");

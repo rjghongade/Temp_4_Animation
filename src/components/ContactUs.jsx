@@ -104,7 +104,7 @@ const ContactUs = () => {
         message: "",
       });
       setTimeout(() => {
-        window.location.href = "/thanku";
+        window.location.href = "/thank-you/";
       }, 1500);
       
     } catch (error) {

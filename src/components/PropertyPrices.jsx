@@ -188,7 +188,7 @@ const PropertyPrices = () => {
                   </div>
                   
                   {/* Price Tag - only shown if price is available */}
-                  {property.property_price && (
+                  {/* {property.property_price && (
                     <div className="mb-6">
                       <div className="inline-block px-4 py-2 bg-amber-100 text-amber-800 font-bold rounded-lg">
                         <span className="flex items-center">
@@ -197,7 +197,7 @@ const PropertyPrices = () => {
                         </span>
                       </div>
                     </div>
-                  )}
+                  )} */}
                   
                   {/* CTA Button with animation */}
                   <div className="mt-auto">
