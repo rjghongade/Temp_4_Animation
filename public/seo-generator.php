@@ -66,7 +66,7 @@ $mappedData = [
 $localFilePath = __DIR__ . '/seodata.json';
 
 // Define dynamic destination paths based on `templateId`
-$destinationBasePath = "/home/q2g3j98i4rdo/seo_websites_templates/bih_seo_template_$templateId";
+$destinationBasePath = "/home/q2g3j98i4rdo/ppc_websites_templates/bih_ppc_template_$templateId";
 $destinationPath1 = "$destinationBasePath/public/seodata.json";
 $destinationPath2 = "$destinationBasePath/seodata.json";
 

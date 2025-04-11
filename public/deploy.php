@@ -94,8 +94,8 @@ logMessage("SEO Generator Response: $seoResponse");
 
 
 // Define directory structure
-$baseTemplateDir = "/home/q2g3j98i4rdo/seo_websites_templates";
-$projectDir = "$baseTemplateDir/bih_seo_template_$templateId";
+$baseTemplateDir = "/home/q2g3j98i4rdo/ppc_websites_templates";
+$projectDir = "$baseTemplateDir/bih_ppc_template_$templateId";
 $buildDir = "$projectDir/dist";
 $targetBaseDir = "/home/q2g3j98i4rdo/websites";
 $targetDir = "$targetBaseDir/$domain";
