@@ -21,6 +21,7 @@ import { ContactDialog } from '../components/Contact';
 import PropertiInfo from '../components/Porpertyinfo';
 import PropertyDescription from '../components/PropertyDescription';
 import PropertySpecifications from '../components/PropertySpecifications';
+import Advertisement from '../components/Advertisement';
 
 const HomePage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -64,6 +65,7 @@ const HomePage = () => {
 
 
 
+      <Advertisement />
       <Gallery />
       <ReraInformation />
       <VideoTour />
