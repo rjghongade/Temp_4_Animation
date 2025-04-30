@@ -52,7 +52,6 @@ const HomePage = () => {
 
       <Header />
       <PropertyDescription />
-      <Banks />
       <FloorPlans />
       <PropertyPrices />
       <LocationAdvantages />
@@ -72,6 +71,7 @@ const HomePage = () => {
       <Blogs />
       <FAQ />
       <ContactUs />
+      <Banks />
       <Footer />
       <FloatingButtons />
     </>
