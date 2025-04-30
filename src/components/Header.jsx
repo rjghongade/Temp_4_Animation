@@ -18,29 +18,25 @@ const Header = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
 
   useEffect(() => {
+    // Fetch header data
     const fetchData = async () => {
       try {
         const response = await fetch(
           `${config.API_URL}/header?website=${config.SLUG_URL}`
         );
-
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
-
         const result = await response.json();
         setData(result);
       } catch (err) {
         console.error(err.message);
       }
     };
-
     fetchData();
 
-    const handleScroll = () => {
-      setScrollPosition(window.scrollY);
-    };
-
+    // Scroll listener
+    const handleScroll = () => setScrollPosition(window.scrollY);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -55,41 +51,37 @@ const Header = () => {
 
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
-    if (section) {
-      // Get the header height to use as offset
-      const headerHeight = document.querySelector("header").offsetHeight;
+    if (!section) return;
 
-      // Get the top position of the section relative to the viewport
-      const sectionTop = section.getBoundingClientRect().top;
+    // Calculate scroll position with header offset
+    const headerHeight = document.querySelector("header").offsetHeight;
+    const sectionTop = section.getBoundingClientRect().top;
+    const offsetPosition = sectionTop + window.pageYOffset - headerHeight;
 
-      // Calculate the total scroll distance needed
-      const offsetPosition = sectionTop + window.pageYOffset - headerHeight;
+    // Smooth scroll
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth",
+    });
 
-      // Scroll to the section with the offset
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
+    // Update URL hash without jumping
+    history.pushState(null, "", `#${sectionId}`);
 
-      // Close mobile menu after navigation
-      setMobileMenuOpen(false);
-      setActiveDropdown(null);
-    }
+    // Close menus
+    setMobileMenuOpen(false);
+    setActiveDropdown(null);
   };
 
-  if (!data)
+  if (!data) {
     return (
       <div className="h-screen flex justify-center items-center bg-[#09305d]">
         <div className="w-12 h-12 border-4 border-[#cf6615] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
+  }
 
   const menuItems = [
-    {
-      name: "Home",
-      id: "hero",
-      hasDropdown: false,
-    },
+    { name: "Home", id: "hero", hasDropdown: false },
     {
       name: "Properties",
       id: "properties",
@@ -107,24 +99,12 @@ const Header = () => {
       dropdownItems: [
         { name: "Unit Layouts", id: "UnitLayouts" },
         { name: "Floor Plans", id: "FloorPlans" },
-        { name: "MasterLayout", id: "MasterLayout" },
+        { name: "Master Layout", id: "MasterLayout" },
       ],
     },
-    {
-      name: "Amenities",
-      id: "AmenitiesSection",
-      hasDropdown: false,
-    },
-    {
-      name: "Gallery",
-      id: "Gallery",
-      hasDropdown: false,
-    },
-    {
-      name: "Contact",
-      id: "contact",
-      hasDropdown: false,
-    },
+    { name: "Amenities", id: "AmenitiesSection", hasDropdown: false },
+    { name: "Gallery", id: "Gallery", hasDropdown: false },
+    { name: "Contact", id: "contact", hasDropdown: false },
   ];
 
   const isScrolled = scrollPosition > 50;
@@ -156,15 +136,15 @@ const Header = () => {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-1">
-              {menuItems.map((item, index) => (
-                <div key={index} className="relative group">
+              {menuItems.map((item, idx) => (
+                <div key={idx} className="relative group">
                   <button
                     className={`flex items-center px-4 py-2 text-[#f8f9fa] hover:text-[#cf6615] font-medium transition-colors ${
-                      activeDropdown === index ? "text-[#cf6615]" : ""
+                      activeDropdown === idx ? "text-[#cf6615]" : ""
                     }`}
                     onClick={() =>
                       item.hasDropdown
-                        ? handleDropdown(index)
+                        ? handleDropdown(idx)
                         : scrollToSection(item.id)
                     }
                   >
@@ -172,7 +152,7 @@ const Header = () => {
                     {item.hasDropdown && (
                       <FiChevronDown
                         className={`ml-1 transition-transform duration-200 ${
-                          activeDropdown === index ? "rotate-180" : ""
+                          activeDropdown === idx ? "rotate-180" : ""
                         }`}
                       />
                     )}
@@ -181,24 +161,24 @@ const Header = () => {
                   {item.hasDropdown && (
                     <div
                       className={`absolute left-0 mt-1 w-56 bg-[#f8f9fa] rounded-md shadow-lg overflow-hidden transition-all duration-300 origin-top-left ${
-                        activeDropdown === index
+                        activeDropdown === idx
                           ? "scale-100 opacity-100"
                           : "scale-95 opacity-0 pointer-events-none"
                       }`}
                     >
                       <div className="py-2">
-                        {item.dropdownItems.map((dropdownItem, dropIndex) => (
+                        {item.dropdownItems.map((dd, didx) => (
                           <a
-                            key={dropIndex}
-                            href={`#${dropdownItem.id}`}
+                            key={didx}
+                            href={`#${dd.id}`}
                             className="flex items-center px-4 py-3 text-[#36322e] hover:bg-[#7daa71]/10 hover:text-[#09305d] transition-colors"
                             onClick={(e) => {
                               e.preventDefault();
-                              scrollToSection(dropdownItem.id);
+                              scrollToSection(dd.id);
                             }}
                           >
                             <FiCornerDownRight className="mr-2 text-[#7daa71]" />
-                            {dropdownItem.name}
+                            {dd.name}
                           </a>
                         ))}
                       </div>
@@ -236,13 +216,13 @@ const Header = () => {
         {/* Mobile Menu */}
         <div className={`lg:hidden ${mobileMenuOpen ? "block" : "hidden"}`}>
           <div className="bg-[#36322e] py-4 px-4 space-y-3">
-            {menuItems.map((item, index) => (
-              <div key={index} className="border-b border-[#7daa71]/20 pb-3">
+            {menuItems.map((item, idx) => (
+              <div key={idx} className="border-b border-[#7daa71]/20 pb-3">
                 <button
                   className="w-full flex justify-between items-center py-2 text-[#f8f9fa] focus:outline-none"
                   onClick={() =>
                     item.hasDropdown
-                      ? handleDropdown(index)
+                      ? handleDropdown(idx)
                       : scrollToSection(item.id)
                   }
                 >
@@ -250,25 +230,25 @@ const Header = () => {
                   {item.hasDropdown && (
                     <FiChevronDown
                       className={`transition-transform duration-200 ${
-                        activeDropdown === index ? "rotate-180" : ""
+                        activeDropdown === idx ? "rotate-180" : ""
                       }`}
                     />
                   )}
                 </button>
 
-                {item.hasDropdown && activeDropdown === index && (
+                {item.hasDropdown && activeDropdown === idx && (
                   <div className="mt-2 pl-4 border-l-2 border-[#7daa71]">
-                    {item.dropdownItems.map((dropdownItem, dropIndex) => (
+                    {item.dropdownItems.map((dd, didx) => (
                       <a
-                        key={dropIndex}
-                        href={`#${dropdownItem.id}`}
+                        key={didx}
+                        href={`#${dd.id}`}
                         className="block py-2 text-[#e0e0e0] hover:text-[#cf6615] transition-colors"
                         onClick={(e) => {
                           e.preventDefault();
-                          scrollToSection(dropdownItem.id);
+                          scrollToSection(dd.id);
                         }}
                       >
-                        {dropdownItem.name}
+                        {dd.name}
                       </a>
                     ))}
                   </div>
@@ -292,16 +272,15 @@ const Header = () => {
       </header>
 
       {/* Hero Section */}
-      <div id="hero" className="relative h-screen ">
+      <div id="hero" className="relative h-screen">
         <div className="absolute inset-0">
           <img
             src={data.hero_banner_img.desktop[0]}
             alt={data.property_name}
-            className="w-full h-full object-cover "
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#09305d]/80 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#09305d]/80 to-transparent" />
         </div>
-
         <div className="relative h-full container mx-auto px-4 flex flex-col justify-center animate__animated animate__wobble">
           <div className="max-w-2xl">
             <div className="inline-block mb-4 bg-[#cf6615]/90 px-4 py-2 rounded-r-full">
@@ -309,15 +288,12 @@ const Header = () => {
                 {data.property_type_price_range_text}
               </span>
             </div>
-
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#f8f9fa] mb-6 animate-pulse">
               {data.hero_banner_heading}
             </h1>
-
             <p className="text-xl text-[#e0e0e0] mb-8 max-w-xl leading-relaxed">
               {data.hero_banner_subheading}
             </p>
-
             <div className="flex flex-wrap gap-4">
               <a
                 href="#contact"
@@ -325,18 +301,16 @@ const Header = () => {
                   e.preventDefault();
                   scrollToSection("contact");
                 }}
-                className="inline-flex items-center justify-center bg-[#cf6615] hover:bg-[#cf6615]/90 text-[#f8f9fa] px-8 py-4 rounded-md font-medium text-lg transition-colors shadow-lg "
-                style={{
-                  animation: "wiggle 0.5s ease-in-out infinite",
-                }}
+                className="inline-flex items-center justify-center bg-[#cf6615] hover:bg-[#cf6615]/90 text-[#f8f9fa] px-8 py-4 rounded-md font-medium text-lg transition-colors shadow-lg"
+                style={{ animation: "wiggle 0.5s ease-in-out infinite" }}
               >
                 Book a Site Visit
               </a>
               <style>
                 {`
                   @keyframes wiggle {
-                  0%, 100% { transform: rotate(-3deg); }
-                  50% { transform: rotate(3deg); }
+                    0%, 100% { transform: rotate(-3deg); }
+                    50% { transform: rotate(3deg); }
                   }
                 `}
               </style>
@@ -351,7 +325,6 @@ const Header = () => {
                 View Gallery
               </a>
             </div>
-
             <div className="mt-12 grid grid-cols-2 md:grid-cols-3 gap-4 max-w-lg">
               <div className="bg-[#36322e]/70 backdrop-blur-sm p-4 rounded-lg">
                 <div className="text-[#7daa71] font-semibold">
