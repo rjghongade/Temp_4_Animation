@@ -51,12 +51,6 @@ const ContactUs = () => {
       errors.last_name = "Last name is required";
     }
     
-    if (!formData.email_id.trim()) {
-      //errors.email_id = "Email address is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email_id)) {
-      errors.email_id = "Please enter a valid email address";
-    }
-    
     if (!formData.phone_number.trim()) {
       errors.phone_number = "Phone number is required";
     } else if (!/^[0-9]{10}$/.test(formData.phone_number.replace(/\s/g, ""))) {
@@ -210,7 +204,7 @@ const ContactUs = () => {
                             ? "border-[#cf6615]"
                             : "border-[#09305d]/20 group-focus-within:border-[#7daa71]"
                         } rounded-xl pl-12 p-4 focus:outline-none transition-all`}
-                        placeholder="Your first name"
+                        placeholder="Your first name*"
                       />
                     </div>
                     {formErrors.first_name && (
@@ -240,7 +234,7 @@ const ContactUs = () => {
                             ? "border-[#cf6615]"
                             : "border-[#09305d]/20 group-focus-within:border-[#7daa71]"
                         } rounded-xl pl-12 p-4 focus:outline-none transition-all`}
-                        placeholder="Your last name"
+                        placeholder="Your last name*"
                       />
                     </div>
                     {formErrors.last_name && (
@@ -302,7 +296,7 @@ const ContactUs = () => {
                             ? "border-[#cf6615]"
                             : "border-[#09305d]/20 group-focus-within:border-[#7daa71]"
                         } rounded-xl pl-12 p-4 focus:outline-none transition-all`}
-                        placeholder="Your phone number"
+                        placeholder="Your phone number*"
                       />
                     </div>
                     {formErrors.phone_number && (

@@ -99,12 +99,6 @@ export const ContactDialog = ({ isOpen, onClose }) => {
       errors.last_name = "Last name is required";
     }
 
-    if (!formData.email_id.trim()) {
-      //errors.email_id = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email_id)) {
-      errors.email_id = "Please enter a valid email address";
-    }
-
     if (!formData.phone_number.trim()) {
       errors.phone_number = "Phone number is required";
     } else if (!/^[0-9]{10}$/.test(formData.phone_number.replace(/\s/g, ""))) {
@@ -268,7 +262,7 @@ export const ContactDialog = ({ isOpen, onClose }) => {
                         ? "border-red-500"
                         : "border-[#09305d]"
                       } rounded-lg pl-10 p-2 text-sm focus:outline-none focus:border-[#7daa71]`}
-                    placeholder="First Name"
+                    placeholder="First Name*"
                   />
                 </div>
                 {formErrors.first_name && (
@@ -300,7 +294,7 @@ export const ContactDialog = ({ isOpen, onClose }) => {
                         ? "border-red-500"
                         : "border-[#09305d]"
                       } rounded-lg pl-10 p-2 text-sm focus:outline-none focus:border-[#7daa71]`}
-                    placeholder="Last Name"
+                    placeholder="Last Name*"
                   />
                 </div>
                 {formErrors.last_name && (
@@ -363,7 +357,7 @@ export const ContactDialog = ({ isOpen, onClose }) => {
                       ? "border-red-500"
                       : "border-[#09305d]"
                     } rounded-lg pl-10 p-2 text-sm focus:outline-none focus:border-[#7daa71]`}
-                  placeholder="Your phone number"
+                  placeholder="Your phone number*"
                 />
               </div>
               {formErrors.phone_number && (
