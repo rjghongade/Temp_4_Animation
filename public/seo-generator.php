@@ -58,7 +58,11 @@ $mappedData = [
         "h1" => $seoData['data']['h1'] ?? '',
         "h2" => $seoData['data']['h2'] ?? '',
         "about_builder" => $seoData['data']['about_builder'] ?? '',
-        "property_detail" => $seoData['data']['property_detail'] ?? ''
+        "property_detail" => $seoData['data']['property_detail'] ?? '',
+        "gtag_id" => $seoData['data']['gtag_id'] ?? '',
+        "whatsapp_gtag_id" => $seoData['data']['whatsapp_gtag_id'] ?? '',
+        "phone_conversation_number" => $seoData['data']['phone_conversation_number'] ?? '',
+        "phone_conversation_id" => $seoData['data']['phone_conversation_id'] ?? ''
     ]
 ];
 
