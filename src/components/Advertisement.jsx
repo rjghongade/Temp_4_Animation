@@ -71,7 +71,7 @@ const Advertisement = () => {
     );
   }
 
-  if (!ads.length) return null;
+  if (!ads || !ads?.length) return null;
 
   return (
     <div id="advertisements" className="bg-gray-900 py-16 px-4">
