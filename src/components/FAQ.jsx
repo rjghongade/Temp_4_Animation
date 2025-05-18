@@ -84,7 +84,7 @@ const FAQ = () => {
           <motion.div
             key={faq.id}
             className={`flex items-center gap-4 p-4 rounded-lg shadow-md transition-all ${
-              index % 2 === 0 ? "bg-[#e0e0e0]" : "bg-[#cf6615]/20"
+              index % 2 === 0 ? "bg-[#cf6615]/20" : "bg-[#cf6615]/20"
             }`}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -95,7 +95,7 @@ const FAQ = () => {
               className={`flex-1 flex items-center justify-between p-4 text-left transition-all w-full rounded-lg ${
                 index % 2 === 0
                   ? "hover:bg-[#cf6615] hover:text-white"
-                  : "hover:bg-[#09305d] hover:text-white"
+                  : "hover:bg-[#cf6615] hover:text-white"
               }`}
             >
               <span className="text-lg font-medium text-[#09305d]">
