@@ -88,6 +88,7 @@ const Header = () => {
       hasDropdown: true,
       dropdownItems: [
         { name: "About the Property", id: "featured" },
+        { name: "Property Info", id: "property_info" },
         { name: "About the Builder", id: "About_the_Builder" },
       ],
     },

@@ -22,7 +22,7 @@ const PropertiInfo = () => {
   }
 
   return (
-    <div id="SMP_Amberwood" className="max-w-7xl mx-auto p-6 bg-white text-gray-800 rounded-lg shadow-xl mb-3">
+    <div id="property_info" className="max-w-7xl mx-auto p-6 bg-white text-gray-800 rounded-lg shadow-xl mb-3">
       <h2 className="text-3xl font-bold text-blue-900 mb-6 text-center property-content-h1">
         {property.property_name}
       </h2>

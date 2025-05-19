@@ -23,7 +23,7 @@ const PropertyDetails = () => {
 
   return (
     <motion.section
-      id="PropertiInfo"
+      id="property_info"
       className="py-12 px-4 sm:px-6 md:px-8 relative overflow-hidden"
       animate={{
         background: [
@@ -120,7 +120,7 @@ const PropertyDetails = () => {
         </div>
 
         {/* Tab Content Animation */}
-        <div className="p-6">
+        <div id="property_info" className="p-6">
           <AnimatePresence mode="wait">
             {activeTab === "info" && (
               <motion.div
