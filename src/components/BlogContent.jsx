@@ -104,7 +104,7 @@ const BlogContent = () => {
 
   return (
     <>
-<div className="min-h-screen bg-white text-[#d1b578] py-8 px-4 sm:px-6 lg:px-8">
+<div className="min-h-screen bg-white text-[#000000] py-8 px-4 sm:px-6 lg:px-8">
   <div className="max-w-4xl mx-auto">
     <button
       className="mb-4 flex items-center space-x-2 px-4 py-2 rounded-full bg-[#09305d] text-[#d1b578] hover:text-[#5f7858] transition-colors"
@@ -135,7 +135,7 @@ const BlogContent = () => {
 
     {/* Blog Short Content */}
     <div className="bg-[#f8f9fa] rounded-lg p-6 mb-6">
-      <p className="text-[#d1b578] text-lg leading-relaxed">
+      <p className="text-[#000000] text-lg leading-relaxed">
         {blog.post_content_short}
       </p>
     </div>
