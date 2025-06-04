@@ -3,11 +3,13 @@ import { MessageCircle, Phone, User, X, Plus, ChevronUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import seodata from "../../seodata.json";
 import { ContactDialog } from "./Contact";
+import useContact from "../hooks/useContact";
 
 const FloatingButtons = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
+  const { contact } = useContact();
 
   // Track scroll position to add special effects
   useEffect(() => {
@@ -29,7 +31,9 @@ const FloatingButtons = () => {
       id: "whatsapp",
       icon: <MessageCircle size={20} className="text-white" />,
       label: "WhatsApp",
-      href: `https://wa.me/918600020568?text=I%20am%20interested%20in%20${encodeURIComponent(propertyName)}`,
+      href: `https://wa.me/${
+        contact?.footer_phone
+      }?text=I%20am%20interested%20in%20${encodeURIComponent(propertyName)}`,
       color: "bg-gradient-to-r from-[#7daa71] to-[#36322e]",
       hoverColor: "hover:from-[#36322e] hover:to-[#7daa71]",
       ringColor: "ring-[#7daa71]",
@@ -38,7 +42,7 @@ const FloatingButtons = () => {
       id: "phone",
       icon: <Phone size={20} className="text-white" />,
       label: "Call Now",
-      href: "tel:+918600020568",
+      href: `tel:${contact?.footer_phone}`,
       color: "bg-gradient-to-r from-[#09305d] to-[#cf6615]",
       hoverColor: "hover:from-[#cf6615] hover:to-[#09305d]",
       ringColor: "ring-[#09305d]",
@@ -106,9 +110,13 @@ const FloatingButtons = () => {
                       href={button.href}
                       className={`group flex items-center justify-between w-36 sm:w-44 px-4 py-3 rounded-xl ${button.color} ${button.hoverColor} text-white shadow-lg ring-1 ring-white/20 backdrop-blur-sm transition-all duration-300 transform hover:-translate-y-1`}
                       target={button.id === "whatsapp" ? "_blank" : "_self"}
-                      rel={button.id === "whatsapp" ? "noopener noreferrer" : ""}
+                      rel={
+                        button.id === "whatsapp" ? "noopener noreferrer" : ""
+                      }
                     >
-                      <span className="text-sm font-medium">{button.label}</span>
+                      <span className="text-sm font-medium">
+                        {button.label}
+                      </span>
                       <span
                         className={`p-2 rounded-full ${button.ringColor} bg-white/10 transition-all duration-300 group-hover:bg-white/20`}
                       >
@@ -120,7 +128,9 @@ const FloatingButtons = () => {
                       onClick={button.onClick}
                       className={`group flex items-center justify-between w-36 sm:w-44 px-4 py-3 rounded-xl ${button.color} ${button.hoverColor} text-white shadow-lg ring-1 ring-white/20 backdrop-blur-sm transition-all duration-300 transform hover:-translate-y-1`}
                     >
-                      <span className="text-sm font-medium">{button.label}</span>
+                      <span className="text-sm font-medium">
+                        {button.label}
+                      </span>
                       <span
                         className={`p-2 rounded-full ${button.ringColor} bg-white/10 transition-all duration-300 group-hover:bg-white/20`}
                       >
